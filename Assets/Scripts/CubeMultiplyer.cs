@@ -1,52 +1,47 @@
-using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody), typeof(MeshRenderer), typeof(Explosion))]
 public class CubeMultiplyer : MonoBehaviour
 {
 	[SerializeField] private GameObject _folder;
 	[SerializeField] private float _divideValue;
-	[SerializeField] private float _explodingForseMultiplyer;
 
-	[Range(0f, 1f)]
-	[SerializeField] private float _exploadingBase;
+	[SerializeField] private bool _exploadOnDestroy;
+	[SerializeField] private bool _exploadOnSpawn;
+
+	private Explosion _explosion;
 	private float _divideAllChanse = 101;
 	private float _divideWinChanse = 101;
 	private float _divideChanseDivider = 2;
 
-	private int _minNewCubeCount = 1;
+	private int _minNewCubeCount = 2;
 	private int _maxNewCubeCount = 6;
-
-	private float _explodingRadius;
-	private float _explodingForse;
-
-	public void SetChances(float winChanse) => _divideWinChanse = winChanse;
 
 	private void Start()
 	{
-		_explodingRadius = -(float)Math.Log(transform.localScale.x, _exploadingBase);
-		_explodingForse = -(float)(Math.Log(transform.localScale.x, _exploadingBase) * _explodingForseMultiplyer);
-		gameObject.GetComponent<MeshRenderer>().material.color = UnityEngine.Random.ColorHSV();
+		GetComponent<MeshRenderer>().material.color = UnityEngine.Random.ColorHSV();
+		_explosion = GetComponent<Explosion>();
 	}
 
 	private void OnMouseUpAsButton()
 	{
-		if (TryWinRandom())
+		if (TrySlicing())
 			SpawnCubes();
 		else
-			ExploadCubes();
+			DestroyCube();
 	}
 
-	private void ExploadCubes()
-	{
-		Collider[] hitColliders = Physics.OverlapSphere(transform.position, _explodingRadius);
+	public void SetChances(float winChanse) => _divideWinChanse = winChanse;
 
-		foreach (Collider hitCollider in hitColliders)
-			hitCollider.attachedRigidbody?.AddExplosionForce(_explodingForse, transform.position, _explodingRadius);
+	private void DestroyCube()
+	{
+		if (_exploadOnDestroy)
+			_explosion.ExploadCubesInRadius();
 
 		gameObject.SetActive(false);
 	}
 
-	private bool TryWinRandom()
+	private bool TrySlicing()
 	{
 		bool isWin = UnityEngine.Random.Range(0, _divideAllChanse) <= _divideWinChanse;
 		_divideWinChanse /= _divideChanseDivider;
@@ -56,9 +51,19 @@ public class CubeMultiplyer : MonoBehaviour
 	private void SpawnCubes()
 	{
 		gameObject.transform.localScale /= _divideValue;
-		float cubeSpawnCount = UnityEngine.Random.Range(_minNewCubeCount, _maxNewCubeCount);
+		int cubeSpawnCount = UnityEngine.Random.Range(_minNewCubeCount, _maxNewCubeCount);
+		Collider[] spawnedCubes = new Collider[cubeSpawnCount];
 
 		for (int i = 0; i < cubeSpawnCount; i++)
-			Instantiate(gameObject, _folder.transform).GetComponent<CubeMultiplyer>().SetChances(_divideWinChanse);
+		{
+			CubeMultiplyer cube = Instantiate(this, _folder.transform);
+			cube.SetChances(_divideWinChanse);
+			spawnedCubes[i] = cube.GetComponent<Collider>();
+		}
+
+		if (_exploadOnSpawn)
+			_explosion.ExploadCubes(spawnedCubes);
+
+		gameObject.SetActive(false);
 	}
 }
