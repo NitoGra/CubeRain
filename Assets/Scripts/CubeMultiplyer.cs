@@ -1,5 +1,4 @@
 using System;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class CubeMultiplyer : MonoBehaviour
@@ -20,7 +19,7 @@ public class CubeMultiplyer : MonoBehaviour
 	private float _explodingRadius;
 	private float _explodingForse;
 
-	public void SetChanses(float winChanse) => _divideWinChanse = winChanse;
+	public void SetChances(float winChanse) => _divideWinChanse = winChanse;
 
 	private void Start()
 	{
@@ -34,16 +33,10 @@ public class CubeMultiplyer : MonoBehaviour
 		if (TryWinRandom())
 			SpawnCubes();
 		else
-			Exploading();
+			ExploadCubes();
 	}
 
-	void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.yellow;
-		Gizmos.DrawSphere(transform.position, _explodingRadius);
-	}
-
-	private void Exploading()
+	private void ExploadCubes()
 	{
 		Collider[] hitColliders = Physics.OverlapSphere(transform.position, _explodingRadius);
 
@@ -66,6 +59,6 @@ public class CubeMultiplyer : MonoBehaviour
 		float cubeSpawnCount = UnityEngine.Random.Range(_minNewCubeCount, _maxNewCubeCount);
 
 		for (int i = 0; i < cubeSpawnCount; i++)
-			Instantiate(gameObject, _folder.transform).GetComponent<CubeMultiplyer>().SetChanses(_divideWinChanse);
+			Instantiate(gameObject, _folder.transform).GetComponent<CubeMultiplyer>().SetChances(_divideWinChanse);
 	}
 }
