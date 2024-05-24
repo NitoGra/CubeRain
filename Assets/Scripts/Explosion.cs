@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Explosion : MonoBehaviour
 {
 	[Range(0f, 1f)]
