@@ -10,7 +10,7 @@ public class CubeMultiplyer : MonoBehaviour
 	private Explosion _explosion;
 	private CubeSpawner _spawner;
 	private int _divideAllChanse = 101;
-	private int _divideWinChanse = 101;
+	private int _divideWinChanse = 100;
 	private int _divideChanseDivider = 2;
 
 	private void Start()
@@ -50,9 +50,7 @@ public class CubeMultiplyer : MonoBehaviour
 	private bool CanSlicing()
 	{
 		bool isWin = UnityEngine.Random.Range(0, _divideAllChanse) <= _divideWinChanse;
-		print(_divideAllChanse + " <= " + _divideWinChanse);
 		_divideWinChanse /= _divideChanseDivider;
-		print("=>> " + _divideWinChanse);
 		return isWin;
 	}
 }
