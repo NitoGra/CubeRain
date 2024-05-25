@@ -16,7 +16,7 @@ public class CubeSpawner : MonoBehaviour
 		_cube = GetComponent<CubeMultiplyer>();
 	}
 
-	public Collider[] SpawnCubes(float chanses)
+	public Collider[] SpawnCubes(int chanses)
 	{
 		gameObject.transform.localScale /= _divideValue;
 		int cubeSpawnCount = UnityEngine.Random.Range(_minNewCubeCount, _maxNewCubeCount);

@@ -9,9 +9,9 @@ public class CubeMultiplyer : MonoBehaviour
 
 	private Explosion _explosion;
 	private CubeSpawner _spawner;
-	private float _divideAllChanse = 101;
-	private float _divideWinChanse = 101;
-	private float _divideChanseDivider = 2;
+	private int _divideAllChanse = 101;
+	private int _divideWinChanse = 101;
+	private int _divideChanseDivider = 2;
 
 	private void Start()
 	{
@@ -26,9 +26,11 @@ public class CubeMultiplyer : MonoBehaviour
 			SpawnAndExploadeCubes();
 		else
 			DestroyCube();
+
+		gameObject.SetActive(false);
 	}
 
-	public void SetChances(float winChanse) => _divideWinChanse = winChanse;
+	public void SetChances(int winChanse) => _divideWinChanse = winChanse;
 
 	private void SpawnAndExploadeCubes()
 	{
@@ -37,21 +39,20 @@ public class CubeMultiplyer : MonoBehaviour
 		if (_exploadOnSpawn)
 			_explosion.ExploadCubes(spawnedCubes);
 
-		gameObject.SetActive(false);
 	}
 
 	private void DestroyCube()
 	{
 		if (_exploadOnDestroy)
 			_explosion.ExploadCubesInRadius();
-
-		gameObject.SetActive(false);
 	}
 
 	private bool CanSlicing()
 	{
 		bool isWin = UnityEngine.Random.Range(0, _divideAllChanse) <= _divideWinChanse;
+		print(_divideAllChanse + " <= " + _divideWinChanse);
 		_divideWinChanse /= _divideChanseDivider;
+		print("=>> " + _divideWinChanse);
 		return isWin;
 	}
 }
