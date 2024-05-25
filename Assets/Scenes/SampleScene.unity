@@ -1218,8 +1218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c49fdd8612533499465b825815dbd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _exploadOnDestroy: 0
+  _exploadOnDestroy: 1
   _exploadOnSpawn: 1
+  _divideChanseDivider: 2
 --- !u!33 &1788242599
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1282,8 +1283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ef2a4d11f07594ca1d99a3dd9d25ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _exploadingBase: 0.985
-  _explodingForseMultiplyer: 17
+  _explodingRadiusMultiplyer: 8000
+  _explodingForseMultiplyer: 4500
 --- !u!114 &1788242603
 MonoBehaviour:
   m_ObjectHideFlags: 0
