@@ -6,12 +6,12 @@ public class CubeMultiplyer : MonoBehaviour
 {
 	[SerializeField] private bool _exploadOnDestroy;
 	[SerializeField] private bool _exploadOnSpawn;
+	[SerializeField] private int _divideChanseDivider = 2;
 
 	private Explosion _explosion;
 	private CubeSpawner _spawner;
 	private int _divideAllChanse = 101;
 	private int _divideWinChanse = 100;
-	private int _divideChanseDivider = 2;
 
 	private void Start()
 	{

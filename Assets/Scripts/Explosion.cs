@@ -4,17 +4,20 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class Explosion : MonoBehaviour
 {
-	[Range(0f, 1f)]
-	[SerializeField] private float _exploadingBase;
+	[SerializeField] private float _explodingRadiusMultiplyer;
 	[SerializeField] private float _explodingForseMultiplyer;
 
 	private float _explodingRadius;
 	private float _explodingForse;
+	private float _startExplodingRadius = 400;
+	private float _startExplodingForse = 400;
 
 	private void Start()
 	{
-		_explodingRadius = -(float)Math.Log(transform.localScale.x, _exploadingBase);
-		_explodingForse = -(float)(Math.Log(transform.localScale.x, _exploadingBase) * _explodingForseMultiplyer);
+		_explodingRadius = 1.5f / transform.localScale.x * _explodingRadiusMultiplyer + _startExplodingRadius;
+		_explodingForse = 1.5f / transform.localScale.x * _explodingForseMultiplyer + _startExplodingForse;
+
+		print("Сила - " + _explodingForse + "радиус - " + _explodingRadius);
 	}
 
 	public void ExploadCubesInRadius()
