@@ -11,13 +11,12 @@ public class Explosion : MonoBehaviour
 	private float _explodingForse;
 	private float _startExplodingRadius = 400;
 	private float _startExplodingForse = 400;
+	private float _proportionalityFactor = 1.5f;
 
 	private void Start()
 	{
-		_explodingRadius = 1.5f / transform.localScale.x * _explodingRadiusMultiplyer + _startExplodingRadius;
-		_explodingForse = 1.5f / transform.localScale.x * _explodingForseMultiplyer + _startExplodingForse;
-
-		print("Сила - " + _explodingForse + "радиус - " + _explodingRadius);
+		_explodingRadius = _proportionalityFactor / transform.localScale.x * _explodingRadiusMultiplyer + _startExplodingRadius;
+		_explodingForse = _proportionalityFactor / transform.localScale.x * _explodingForseMultiplyer + _startExplodingForse;
 	}
 
 	public void ExploadCubesInRadius()
